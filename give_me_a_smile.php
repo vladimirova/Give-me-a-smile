@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Give me a smile
-Plugin URI:
-Description: This plugin provides a simple rating of your site
+Plugin URI: https://github.com/vladimirova/Give-me-a-smile
+Description: This plugin provides simple voting plugin to your site.
 Author: Nonka Vladimirova
 Version: 1.0
-Author URI:
+Author URI: https://github.com/vladimirova
 */
 
 class Give_me_a_smile extends WP_Widget
