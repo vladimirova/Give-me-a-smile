@@ -4,7 +4,7 @@ Plugin Name: Give me a smile
 Plugin URI: https://github.com/vladimirova/Give-me-a-smile
 Description: This plugin provides simple voting plugin to your site.
 Author: Nonka Vladimirova
-Version: 1.0
+Version: 1.1
 Author URI: https://github.com/vladimirova
 */
 
@@ -35,8 +35,8 @@ class Give_me_a_smile extends WP_Widget
         if(isset($_SESSION['vote']))
         {
             global $wpdb;
-            $smile_count = $wpdb->get_var("SELECT smile_count FROM ".$wpdb->base_prefix."rating WHERE id = 1");
-            $sad_count = $wpdb->get_var("SELECT sad_count FROM ".$wpdb->base_prefix."rating WHERE id = 1");
+            $smile_count = $wpdb->get_var("SELECT smile_count FROM ".$wpdb->base_prefix."rating_smiles WHERE id = 1");
+            $sad_count = $wpdb->get_var("SELECT sad_count FROM ".$wpdb->base_prefix."rating_smiles WHERE id = 1");
 
             ?>
             <aside class="widget">
@@ -93,7 +93,7 @@ class Give_me_a_smile extends WP_Widget
         {
             $charset_collate = "DEFAULT CHARACTER SET ".$wpdb->charset;
 
-            $sql = "CREATE TABLE ".$wpdb->base_prefix."rating (
+            $sql = "CREATE TABLE ".$wpdb->base_prefix."rating_smiles (
                         id int(20) PRIMARY KEY NOT NULL,
                         smile_count int(20) DEFAULT '0',
                         sad_count int(20) DEFAULT '0'
@@ -101,11 +101,11 @@ class Give_me_a_smile extends WP_Widget
 
             $wpdb->query($sql);
 
-            $sql = "INSERT INTO ".$wpdb->base_prefix."rating
+            $sql = "INSERT INTO ".$wpdb->base_prefix."rating_smiles
                     (id, smile_count, sad_count)
                     VALUES(1,0,0)";
 
-            $wpdb->query($sql);
+            $wpdb->query($wpdb->prepare($sql,1));
         }
 
 
@@ -125,7 +125,7 @@ add_action('widgets_init', 'give_me_a_smile_init');
 function register_session(){
     if( !session_id() )
         session_start();
-    //session_destroy();
+    //session_destroy(); //only for test
 }
 add_action('init','register_session');
 
@@ -145,12 +145,11 @@ function sad()
 
         global $wpdb;
 
-        $sql = "UPDATE ".$wpdb->base_prefix."rating
-                SET sad_count = sad_count + 1
-                WHERE id = 1";
+        $sql = 'UPDATE '.$wpdb->base_prefix.'rating_smiles
+                  SET sad_count = sad_count + 1
+                  WHERE id = 1';
 
-        $wpdb->query($sql);
-
+        $wpdb->query($wpdb->prepare($sql,1));
 
         $_SESSION['vote'] = 'true';
     }
@@ -166,12 +165,11 @@ function smile()
         }
         global $wpdb;
 
-        $sql = "UPDATE ".$wpdb->base_prefix."rating
+        $sql = "UPDATE ".$wpdb->base_prefix."rating_smiles
                 SET smile_count = smile_count + 1
                 WHERE id = 1";
 
-        $wpdb->query($sql);
-
+        $wpdb->query($wpdb->prepare($sql,1));
 
         $_SESSION['vote'] = 'true';
     }
