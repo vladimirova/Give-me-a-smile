@@ -2,7 +2,7 @@
 /*
 Plugin Name: Give me a smile
 Plugin URI: https://github.com/vladimirova/Give-me-a-smile
-Description: This plugin provides simple voting plugin to your site.
+Description: This plugin provides simple voting plugin for your site.
 Author: Nonka Vladimirova
 Version: 1.1
 Author URI: https://github.com/vladimirova
