@@ -1,2 +1,2 @@
 # Give-me-a-smile
-WordPress plugin. Simple voting plugin to your site.
+WordPress plugin. Simple voting plugin for your site.
